@@ -1,28 +1,41 @@
 REMIX DEFAULT WORKSPACE
 
-Remix default workspace is present when:
-i. Remix loads for the very first time 
-ii. A new workspace is created with 'Default' template
-iii. There are no files existing in the File Explorer
+This code defines two contracts:
 
-This workspace contains 3 directories:
+1. Cryptos (ERC20 Token):
 
-1. 'contracts': Holds three contracts with increasing levels of complexity.
-2. 'scripts': Contains four typescript files to deploy a contract. It is explained below.
-3. 'tests': Contains one Solidity test file for 'Ballot' contract & one JS test file for 'Storage' contract.
+This contract implements the ERC20 standard, a common interface for tokens on the Ethereum blockchain. 
+It defines functionalities for:
 
-SCRIPTS
+Specifying token details like name, symbol, and decimals.
+Tracking the total token supply (initially set to 1,000,000 in this example).
+Storing balances for each address in a balances mapping.
+Managing allowances for spending tokens on behalf of others using an allowed mapping.
 
-The 'scripts' folder has four typescript files which help to deploy the 'Storage' contract using 'web3.js' and 'ethers.js' libraries.
+It implements the required ERC20 functions:
 
-For the deployment of any other contract, just update the contract's name from 'Storage' to the desired contract and provide constructor arguments accordingly 
-in the file `deploy_with_ethers.ts` or  `deploy_with_web3.ts`
+balanceOf: Returns the token balance of an address.
+transfer: Transfers tokens from the sender to another address.
+allowance: Checks the spender's allowance for a specific address.
+approve: Allows another address to spend a specific amount of tokens on the owner's behalf.
+transferFrom: Transfers tokens from one address to another using a spender's allowance.
 
-In the 'tests' folder there is a script containing Mocha-Chai unit tests for 'Storage' contract.
+2. CryptosICO (Initial Coin Offering):
 
-To run a script, right click on file name in the file explorer and click 'Run'. Remember, Solidity file must already be compiled.
-Output from script will appear in remix terminal.
+This contract inherits from the Cryptos contract and adds functionalities for conducting an ICO (Initial Coin Offering):
 
-Please note, require/import is supported in a limited manner for Remix supported modules.
-For now, modules supported by Remix are ethers, web3, swarmgw, chai, multihashes, remix and hardhat only for hardhat.ethers object/plugin.
-For unsupported modules, an error like this will be thrown: '<module_name> module require is not supported by Remix IDE' will be shown.
+Defines variables for the ICO administrator (admin), deposit address (deposit), token price, hard cap (maximum amount to raise), raised amount, sale duration, and minimum/maximum investment limits.
+Uses an enum called State to track the ICO's current stage (before start, running, after end, or halted).
+Provides functions for:
+Halting and resuming the ICO (only accessible by the admin).
+Changing the deposit address (only accessible by the admin).
+Getting the current ICO state.
+Investing in the ICO:
+Checks if the ICO is running and within investment limits.
+Calculates the number of tokens based on the investment amount.
+Transfers tokens from the founder to the investor and ETH to the deposit address.
+Emits an Invest event.
+Overriding the transfer and transferFrom functions to prevent transfers before the token trade start date.
+Burning any remaining tokens held by the founder after the ICO ends.
+
+Overall, this code demonstrates how smart contracts can be used to create and manage tokenized assets with functionalities for conducting an ICO.
