@@ -26,11 +26,15 @@ This contract inherits from the Cryptos contract and adds functionalities for co
 
 Defines variables for the ICO administrator (admin), deposit address (deposit), token price, hard cap (maximum amount to raise), raised amount, sale duration, and minimum/maximum investment limits.
 Uses an enum called State to track the ICO's current stage (before start, running, after end, or halted).
+
 Provides functions for:
+
 Halting and resuming the ICO (only accessible by the admin).
 Changing the deposit address (only accessible by the admin).
 Getting the current ICO state.
+
 Investing in the ICO:
+
 Checks if the ICO is running and within investment limits.
 Calculates the number of tokens based on the investment amount.
 Transfers tokens from the founder to the investor and ETH to the deposit address.
